@@ -1,0 +1,19 @@
+{
+    "development": {
+        "adapter": "slack",
+        "apps" : [
+            "common",
+            "trello",
+            "jenkins",
+            "nagios",
+            "rundeck",
+            "jira",
+            "sonar"
+        ]
+    },
+    "production": {
+        "apps" : {
+            
+        }
+    }
+}

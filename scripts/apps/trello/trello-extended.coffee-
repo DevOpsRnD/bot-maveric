@@ -1,0 +1,29 @@
+# Description:
+#   Exteded trello-hubot script
+#
+# Dependencies:
+#   "hubot-trello": "latest"
+#
+# Configuration:
+#
+# Commands:
+#   hubot trello new "<list>" <name> - Create a new Trello card in the list
+#
+# Author:
+#   jared barboza <jared.m.barboza@gmail.com>
+
+trello = global.trelloExt
+
+addComments = (msg, card_id, comment, usr) ->
+  trello.post "/1/cards/#{card_id}/actions/comments", { text: usr + " commented via Slack Ext:" + comment }, (err, data) ->
+    msg.reply "Sorry, I was unable to do that." if err
+    msg.reply "Wow! That comment has been added" unless err
+
+module.exports = (robot) ->
+
+  robot.respond /trello comments (\w+) ["“'‘]((.+|\n)+)["”'’]/i, (msg) ->
+    addComments msg, msg.match[1], msg.match[2], msg.message.user.name
+
+  robot.respond /trello help/i, (msg) ->
+    msg.reply " Ext Help"
+    msg.send " *  trello comments <card.shortLink> <Comment>"
